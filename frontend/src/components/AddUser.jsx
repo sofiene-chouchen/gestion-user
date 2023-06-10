@@ -22,9 +22,6 @@ export default function AddUser() {
       console.error(error);
     }
   };
-  if (isCreated) {
-    return <Link to={"/"} />;
-  }
 
   return (
     <div className="md:container m-auto flex items-center justify-center mt-20">
@@ -112,13 +109,25 @@ export default function AddUser() {
         <div className="md:flex md:items-center">
           <div className="md:w-1/3"></div>
           <div className="md:w-2/3">
-            <button
-              className="shadow bg-vert focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 ml-16 rounded"
-              type="button"
-              onClick={addUser}
-            >
-              Ajouter
-            </button>
+            {isCreated ? (
+              <Link to={"/"}>
+                <button
+                  className="shadow bg-vert focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 ml-16 rounded"
+                  type="button"
+                  onClick={addUser}
+                >
+                  Ajouter
+                </button>
+              </Link>
+            ) : (
+              <button
+                className="shadow bg-vert focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 ml-16 rounded"
+                type="button"
+                onClick={addUser}
+              >
+                Ajouter
+              </button>
+            )}
           </div>
         </div>
       </form>
