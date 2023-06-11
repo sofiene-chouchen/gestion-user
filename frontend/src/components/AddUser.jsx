@@ -32,7 +32,7 @@ export default function AddUser() {
               class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
               for="inline-full-name"
             >
-              nome
+              Nom :
             </label>
           </div>
           <div className="md:w-2/3">
@@ -51,7 +51,7 @@ export default function AddUser() {
               className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
               for="inline-full-name"
             >
-              prenom
+              Prénom :
             </label>
           </div>
           <div className="md:w-2/3">
@@ -70,7 +70,7 @@ export default function AddUser() {
               className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
               for="inline-full-name"
             >
-              NumTel
+              NumTel :
             </label>
           </div>
           <div className="md:w-2/3">
@@ -89,7 +89,7 @@ export default function AddUser() {
               className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
               for="inline-full-name"
             >
-              sex
+              Sex :
             </label>
           </div>
           <div className="md:w-2/3">
