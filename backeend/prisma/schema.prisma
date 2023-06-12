@@ -12,6 +12,7 @@ datasource db {
 
 model User {
   id     Int    @unique @default(autoincrement())
+  number String
   nom    String
   prenom String
   numTel String

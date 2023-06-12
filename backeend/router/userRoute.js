@@ -16,6 +16,7 @@ route.post("/user", async (req, res) => {
   try {
     const user = await prisma.user.create({
       data: {
+        number: users.number,
         nom: users.name,
         prenom: users.prenom,
         numTel: users.tel,

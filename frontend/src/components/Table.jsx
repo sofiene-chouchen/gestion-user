@@ -107,7 +107,7 @@ export default function Table() {
             {currentPageData.map((item) => (
               <tr key={item.id}>
                 <td className="border px-6 py-4 whitespace-nowrap">
-                  {item.id}
+                  {item.number}
                 </td>
                 <td className="border px-6 py-4 whitespace-nowrap">
                   {item.nom}
