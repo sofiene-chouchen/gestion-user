@@ -29,20 +29,21 @@ route.post("/user", async (req, res) => {
   }
 });
 
-route.delete("/user", async (req, res) => {
-  const { id } = req.body;
+route.delete("/user/:number", async (req, res) => {
+  const { number } = req.params;
 
   try {
-    const deletedUsers = await prisma.user.delete({
+    const deletedUser = await prisma.user.delete({
       where: {
-        id: id,
+        number: number,
       },
     });
 
-    res.status(200).json(deletedUsers);
+    res.status(200).json(deletedUser);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Failed to delete users" });
+    res.status(500).json({ error: "Failed to delete user" });
   }
 });
+
 module.exports = route;

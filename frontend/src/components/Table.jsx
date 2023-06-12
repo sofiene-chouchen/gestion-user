@@ -11,7 +11,10 @@ export default function Table() {
   useEffect(() => {
     fetchData();
   }, []);
-
+  useEffect(() => {
+    // Update the data whenever the currentPage or searchTerm changes
+    fetchData();
+  }, [currentPage, searchTerm]);
   const fetchData = async () => {
     try {
       const response = await axios.get("http://localhost:5000/api/users");
@@ -31,7 +34,8 @@ export default function Table() {
   const offset = currentPage * itemsPerPage;
   const filteredData = data?.filter(
     (item) =>
-      item.nom && item.nom.toLowerCase().includes(searchTerm.toLowerCase())
+      item.prenom &&
+      item.prenom.toLowerCase().includes(searchTerm.toLowerCase())
   );
   const currentPageData = filteredData?.slice(offset, offset + itemsPerPage);
 
@@ -39,14 +43,12 @@ export default function Table() {
     setSearchTerm(event.target.value);
     setCurrentPage(0);
   };
-  const handleDelete = async (id) => {
-    try {
-      const numericId = parseInt(id);
-      await axios.delete("http://localhost:5000/api/user", {
-        data: { id: numericId },
-      });
 
-      const updatedData = data.filter((item) => item.id !== numericId);
+  const handleDelete = async (number) => {
+    try {
+      await axios.delete(`http://localhost:5000/api/user/${number}`);
+
+      const updatedData = data.filter((item) => item.number !== number);
       setData(updatedData);
     } catch (error) {
       console.error(error);
@@ -86,10 +88,10 @@ export default function Table() {
                 N°
               </th>
               <th className="border px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Nom
+                Prénom
               </th>
               <th className="border px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Prénom
+                Nom
               </th>
               <th className="border px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Sexe
@@ -105,15 +107,15 @@ export default function Table() {
           {/* Table body */}
           <tbody>
             {currentPageData.map((item) => (
-              <tr key={item.id}>
+              <tr key={item._id}>
                 <td className="border px-6 py-4 whitespace-nowrap">
                   {item.number}
                 </td>
                 <td className="border px-6 py-4 whitespace-nowrap">
-                  {item.nom}
+                  {item.prenom}
                 </td>
                 <td className="border px-6 py-4 whitespace-nowrap">
-                  {item.prenom}
+                  {item.nom}
                 </td>
                 <td className="border px-6 py-4 whitespace-nowrap">
                   {item.sex}
@@ -123,7 +125,7 @@ export default function Table() {
                 </td>
                 <td className="border px-6 py-4 whitespace-nowrap">
                   <button
-                    onClick={() => handleDelete(item.id)}
+                    onClick={() => handleDelete(item.number)}
                     className="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded-md"
                   >
                     Delete
