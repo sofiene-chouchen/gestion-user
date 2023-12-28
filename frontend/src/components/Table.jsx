@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
-import ReactPaginate from "react-paginate";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+import ReactPaginate from 'react-paginate';
 
 export default function Table() {
   const [data, setData] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     fetchData();
@@ -17,7 +17,9 @@ export default function Table() {
   }, [currentPage, searchTerm]);
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/users");
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND}/api/users`
+      );
       setData(response.data);
     } catch (error) {
       console.log(error);
@@ -44,11 +46,10 @@ export default function Table() {
     setCurrentPage(0);
   };
 
-  const handleDelete = async (number) => {
+  const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/user/${number}`);
-
-      const updatedData = data.filter((item) => item.number !== number);
+      await axios.delete(`${process.env.REACT_APP_BACKEND}/api/user/${id}`);
+      const updatedData = data.filter((item) => item.id !== id);
       setData(updatedData);
     } catch (error) {
       console.error(error);
@@ -60,46 +61,46 @@ export default function Table() {
   }
 
   return (
-    <div className="md:container m-auto">
+    <div className='md:container m-auto'>
       <div>
-        <Link to={"/user"}>
-          <div className="flex flex-row-reverse mt-16">
-            <button className="bg-vert text-white px-4 py-3 font-bold rounded-xl text-l w-24 text drop-shadow-xl">
+        <Link to={'/user'}>
+          <div className='flex flex-row-reverse mt-16'>
+            <button className='bg-vert text-white px-4 py-3 font-bold rounded-xl text-l w-24 text drop-shadow-xl'>
               Ajouter
             </button>
           </div>
         </Link>
       </div>
-      <div className="mt-4">
+      <div className='mt-4'>
         <input
-          type="text"
+          type='text'
           value={searchTerm}
           onChange={handleSearchChange}
-          placeholder="Search by name"
-          className="p-2 border border-gray-300 rounded-md"
+          placeholder='Search by name'
+          className='p-2 border border-gray-300 rounded-md'
         />
       </div>
-      <div className="mt-4">
-        <table className="min-w-full divide-y divide-gray-200">
+      <div className='mt-4'>
+        <table className='min-w-full divide-y divide-gray-200'>
           {/* Table header */}
           <thead>
             <tr>
-              <th className="border px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider ">
+              <th className='border px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider '>
                 N°
               </th>
-              <th className="border px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className='border px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
                 Prénom
               </th>
-              <th className="border px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className='border px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
                 Nom
               </th>
-              <th className="border px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className='border px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
                 Sexe
               </th>
-              <th className="border px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className='border px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
                 Tel
               </th>
-              <th className="border px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className='border px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
                 Operation
               </th>
             </tr>
@@ -108,25 +109,25 @@ export default function Table() {
           <tbody>
             {currentPageData.map((item) => (
               <tr key={item._id}>
-                <td className="border px-6 py-4 whitespace-nowrap">
+                <td className='border px-6 py-4 whitespace-nowrap'>
                   {item.number}
                 </td>
-                <td className="border px-6 py-4 whitespace-nowrap">
+                <td className='border px-6 py-4 whitespace-nowrap'>
                   {item.prenom}
                 </td>
-                <td className="border px-6 py-4 whitespace-nowrap">
+                <td className='border px-6 py-4 whitespace-nowrap'>
                   {item.nom}
                 </td>
-                <td className="border px-6 py-4 whitespace-nowrap">
+                <td className='border px-6 py-4 whitespace-nowrap'>
                   {item.sex}
                 </td>
-                <td className="border px-6 py-4 whitespace-nowrap">
+                <td className='border px-6 py-4 whitespace-nowrap'>
                   {item.numTel}
                 </td>
-                <td className="border px-6 py-4 whitespace-nowrap">
+                <td className='border px-6 py-4 whitespace-nowrap'>
                   <button
-                    onClick={() => handleDelete(item.number)}
-                    className="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded-md"
+                    onClick={() => handleDelete(item.id)}
+                    className='bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded-md'
                   >
                     Delete
                   </button>
@@ -137,17 +138,17 @@ export default function Table() {
         </table>
         {/* Pagination */}
         <ReactPaginate
-          previousLabel={"Previous"}
-          nextLabel={"Next"}
+          previousLabel={'Previous'}
+          nextLabel={'Next'}
           pageCount={pageCount}
           onPageChange={handlePageChange}
-          containerClassName={"flex items-center justify-center mt-8"}
-          previousLinkClassName={"bg-gray-200 px-3 py-2 rounded-l-md"}
-          nextLinkClassName={"bg-gray-200 px-3 py-2 rounded-r-md"}
-          disabledClassName={"text-gray-400 cursor-not-allowed"}
-          activeClassName={"bg-blue-500 text-white px-3 py-2"}
-          pageClassName={"bg-gray-200 px-3 py-2"}
-          breakClassName={"bg-gray-200 px-3 py-2"}
+          containerClassName={'flex items-center justify-center mt-8'}
+          previousLinkClassName={'bg-gray-200 px-3 py-2 rounded-l-md'}
+          nextLinkClassName={'bg-gray-200 px-3 py-2 rounded-r-md'}
+          disabledClassName={'text-gray-400 cursor-not-allowed'}
+          activeClassName={'bg-blue-500 text-white px-3 py-2'}
+          pageClassName={'bg-gray-200 px-3 py-2'}
+          breakClassName={'bg-gray-200 px-3 py-2'}
           marginPagesDisplayed={2}
           pageRangeDisplayed={7}
         />

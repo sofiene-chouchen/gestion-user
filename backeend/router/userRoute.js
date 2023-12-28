@@ -1,9 +1,10 @@
-const exprees = require("express");
+const exprees = require('express');
 
 const route = exprees.Router();
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
-route.get("/users", async (req, res) => {
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient()
+
+route.get('/users', async (req, res) => {
   try {
     const user = await prisma.user.findMany();
     res.status(200).send(user);
@@ -11,7 +12,7 @@ route.get("/users", async (req, res) => {
     res.status(500).send({ message: error });
   }
 });
-route.post("/user", async (req, res) => {
+route.post('/user', async (req, res) => {
   const users = req.body;
   try {
     const user = await prisma.user.create({
@@ -23,13 +24,13 @@ route.post("/user", async (req, res) => {
         sex: users.sex,
       },
     });
-    res.status(201).send({ message: "created " });
+    res.status(201).send({ message: 'created ' });
   } catch (error) {
-    res.status(500).send({ message: "faild" });
+    res.status(500).send({ message: 'faild' });
   }
 });
 
-route.delete("/user/:number", async (req, res) => {
+route.delete('/user/:number', async (req, res) => {
   const { number } = req.params;
 
   try {
@@ -42,7 +43,7 @@ route.delete("/user/:number", async (req, res) => {
     res.status(200).json(deletedUser);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Failed to delete user" });
+    res.status(500).json({ error: 'Failed to delete user' });
   }
 });
 
