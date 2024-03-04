@@ -1,0 +1,29 @@
+name: test contrast name
+on: push
+branches:
+  - main
+
+jobs:
+  test-contrast:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+      - name: zip file
+        run: |
+          zip -r frontend.zip .
+      - name: Contrast Scan Action
+        uses: Contrast-Security-OSS/contrastscan-action@v2.0.3
+        with:
+          artifact: frontend.zip
+          apiKey: ${{ secrets.CONTRAST_API_KEY }}
+          orgId: ${{ secrets.CONTRAST_ORGANIZATION_ID }}
+          authHeader: ${{ secrets.CONTRAST_AUTH_HEADER }}
+          fail: true
